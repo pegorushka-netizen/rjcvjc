@@ -1,0 +1,597 @@
+/* ============================================
+   СБРОС
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   ТЕМЫ (тёмная / светлая)
+   ============================================ */
+:root {
+    --bg-1: #0b0c2a;
+    --bg-2: #1b1f4b;
+    --bg-3: #000000;
+    --text: #ffffff;
+    --text-muted: #b8b8d1;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.15);
+    --accent: #7bdff2;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-1: #f0f4ff;
+        --bg-2: #dbe4ff;
+        --bg-3: #c7d2fe;
+        --text: #1a1a2e;
+        --text-muted: #4a4a6a;
+        --card-bg: rgba(255, 255, 255, 0.7);
+        --card-border: rgba(0, 0, 0, 0.08);
+        --accent: #2c7be5;
+    }
+}
+
+/* ============================================
+   БАЗА
+   ============================================ */
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: radial-gradient(ellipse at bottom,
+        var(--bg-2) 0%,
+        var(--bg-1) 60%,
+        var(--bg-3) 100%);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ============================================
+   КОСМИЧЕСКИЙ ФОН
+   ============================================ */
+.space-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ============================================
+   ЗВЁЗДЫ (три слоя, каждый со своими точками)
+   ============================================ */
+.stars {
+    position: absolute;
+    inset: 0;
+}
+
+.stars::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+        10vw 20vh #fff, 25vw 15vh #ffe, 40vw 40vh #fff,
+        55vw 10vh #ddf, 70vw 30vh #fff, 85vw 25vh #ffe,
+        15vw 60vh #fff, 30vw 75vh #ddf, 50vw 55vh #fff,
+        65vw 80vh #ffe, 80vw 65vh #fff, 92vw 45vh #ddf,
+        5vw 90vh #fff,  35vw 5vh #ffe,  60vw 95vh #fff,
+        75vw 50vh #ddf, 20vw 85vh #fff, 45vw 70vh #ffe,
+        90vw 90vh #fff, 12vw 35vh #ddf;
+    animation: twinkle 3s infinite alternate;
+}
+
+/* Второй слой — только для .stars-2 (другие координаты) */
+.stars-2::before {
+    width: 1px;
+    height: 1px;
+    opacity: 0.7;
+    animation-duration: 4s;
+    box-shadow:
+        8vw 12vh #fff,  22vw 45vh #ddf, 38vw 78vh #fff,
+        52vw 22vh #ffe, 68vw 60vh #fff, 82vw 15vh #ddf,
+        18vw 92vh #fff, 33vw 33vh #ffe, 48vw 5vh  #fff,
+        63vw 48vh #ddf, 78vw 88vh #fff, 95vw 70vh #ffe,
+        3vw 55vh #fff,  28vw 8vh  #ddf, 44vw 62vh #fff,
+        58vw 88vh #ffe, 72vw 42vh #fff, 88vw 5vh  #ddf,
+        13vw 78vh #fff, 37vw 55vh #ffe;
+}
+
+/* Третий слой — крупные звёзды */
+.stars-3::before {
+    width: 3px;
+    height: 3px;
+    opacity: 0.9;
+    animation-duration: 6s;
+    box-shadow:
+        12vw 30vh #fff, 42vw 18vh #ffe, 62vw 55vh #fff,
+        82vw 35vh #ddf, 25vw 82vh #fff, 55vw 92vh #ffe,
+        72vw 72vh #fff, 92vw 12vh #ddf, 5vw  45vh #fff,
+        35vw 65vh #ffe;
+}
+
+@keyframes twinkle {
+    0%   { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* ============================================
+   ПЛАНЕТЫ — БАЗА
+   ============================================ */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.9;
+}
+
+/* ============================================
+   БОЛЬШИЕ ПЛАНЕТЫ
+   ============================================ */
+
+/* 🌍 Земля — верх-лево */
+.planet-earth {
+    width: 90px;
+    height: 90px;
+    top: 15%;
+    left: 8%;
+    background: radial-gradient(circle at 30% 30%,
+        #6ec1ff, #1a73e8 60%, #0b3d91 100%);
+    box-shadow:
+        0 0 40px rgba(110, 193, 255, 0.6),
+        inset -10px -10px 25px rgba(0, 0, 0, 0.5);
+    animation: float 12s ease-in-out infinite;
+}
+
+/* 🔴 Марс — центр-лево */
+.planet-mars {
+    width: 55px;
+    height: 55px;
+    top: 65%;
+    left: 78%;
+    background: radial-gradient(circle at 35% 35%,
+        #ff8a5b, #c0392b 60%, #7b241c 100%);
+    box-shadow:
+        0 0 30px rgba(255, 138, 91, 0.5),
+        inset -8px -8px 20px rgba(0, 0, 0, 0.5);
+    animation: float 15s ease-in-out infinite reverse;
+}
+
+/* 🪐 Сатурн — центр-лево */
+.planet-saturn {
+    width: 110px;
+    height: 110px;
+    top: 55%;
+    left: 5%;
+    background: radial-gradient(circle at 35% 35%,
+        #f7dc9c, #d4a95a 60%, #8b6b2e 100%);
+    box-shadow:
+        0 0 40px rgba(247, 220, 156, 0.4),
+        inset -12px -12px 25px rgba(0, 0, 0, 0.4);
+    animation: float 18s ease-in-out infinite;
+}
+
+/* Кольцо Сатурна — центрируется через отдельный wrapper */
+.planet-saturn .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170%;
+    height: 38%;
+    border: 3px solid rgba(255, 230, 180, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    box-shadow: 0 0 15px rgba(255, 230, 180, 0.3);
+    pointer-events: none;
+}
+
+/* 🟤 Юпитер — верх-право */
+.planet-jupiter {
+    width: 70px;
+    height: 70px;
+    top: 20%;
+    right: 10%;
+    background: linear-gradient(180deg,
+        #d9a679 0%, #a97850 25%,
+        #e3c19a 40%, #b8886a 55%,
+        #c9a480 75%, #8b6b4a 100%);
+    box-shadow:
+        0 0 35px rgba(217, 166, 121, 0.45),
+        inset -10px -10px 22px rgba(0, 0, 0, 0.5);
+    animation: float 14s ease-in-out infinite reverse;
+}
+
+/* ============================================
+   МАЛЫЕ ПЛАНЕТЫ (для заполнения фона)
+   ============================================ */
+
+/* 🌍 Маленькая Земля — низ-лево */
+.planet-earth-sm {
+    width: 45px;
+    height: 45px;
+    bottom: 10%;
+    left: 15%;
+    background: radial-gradient(circle at 30% 30%,
+        #6ec1ff, #1a73e8 60%, #0b3d91 100%);
+    box-shadow:
+        0 0 25px rgba(110, 193, 255, 0.5),
+        inset -6px -6px 15px rgba(0, 0, 0, 0.5);
+    animation: float 16s ease-in-out infinite;
+}
+
+/* 🔴 Маленький Марс — низ-право */
+.planet-mars-sm {
+    width: 35px;
+    height: 35px;
+    bottom: 20%;
+    right: 12%;
+    background: radial-gradient(circle at 35% 35%,
+        #ff8a5b, #c0392b 60%, #7b241c 100%);
+    box-shadow:
+        0 0 20px rgba(255, 138, 91, 0.5),
+        inset -5px -5px 12px rgba(0, 0, 0, 0.5);
+    animation: float 20s ease-in-out infinite reverse;
+}
+
+/* 🪐 Маленький Сатурн — верх-центр
+   ВАЖНО: не используем translateX в animation,
+   поэтому центрируем через left + margin-left */
+.planet-saturn-sm {
+    width: 60px;
+    height: 60px;
+    top: 8%;
+    left: 50%;
+    margin-left: -30px; /* половина ширины */
+    background: radial-gradient(circle at 35% 35%,
+        #f7dc9c, #d4a95a 60%, #8b6b2e 100%);
+    box-shadow:
+        0 0 25px rgba(247, 220, 156, 0.4),
+        inset -8px -8px 18px rgba(0, 0, 0, 0.4);
+    animation: float 22s ease-in-out infinite;
+}
+
+.planet-saturn-sm .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 170%;
+    height: 38%;
+    border: 2px solid rgba(255, 230, 180, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    box-shadow: 0 0 10px rgba(255, 230, 180, 0.3);
+    pointer-events: none;
+}
+
+/* 🟤 Маленький Юпитер — низ-центр */
+.planet-jupiter-sm {
+    width: 50px;
+    height: 50px;
+    bottom: 6%;
+    left: 50%;
+    margin-left: -25px; /* половина ширины */
+    background: linear-gradient(180deg,
+        #d9a679 0%, #a97850 25%,
+        #e3c19a 40%, #b8886a 55%,
+        #c9a480 75%, #8b6b4a 100%);
+    box-shadow:
+        0 0 25px rgba(217, 166, 121, 0.45),
+        inset -7px -7px 18px rgba(0, 0, 0, 0.5);
+    animation: float 17s ease-in-out infinite reverse;
+}
+
+/* ============================================
+   АНИМАЦИЯ ПЛАВАНИЯ
+   ============================================ */
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50%      { transform: translateY(-20px) translateX(10px); }
+}
+
+/* ============================================
+   КОНТЕНТ
+   ============================================ */
+header, main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #ff7bff, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+/* ============================================
+   СЕТКА КАРТОЧЕК
+   ============================================ */
+.planets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;    /* ← карточки растягиваются до одной высоты */
+    gap: 20px;
+    padding: 25px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px 15px;
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(6px);
+    /* align-self: flex-start; ← УБИРАЕМ эту строку */
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(123, 223, 242, 0.4);
+}
+
+.card h2 {
+    margin-bottom: 10px;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.card p {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ============================================
+   КНОПКИ-ССЫЛКИ
+   ============================================ */
+.btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #7bdff2, #2c7be5);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(123, 223, 242, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(123, 223, 242, 0.6);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   СТРАНИЦЫ «ПОДРОБНЕЕ»
+   ============================================ */
+.content {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    flex: 1;
+}
+
+.card.wide {
+    width: 100%;
+    max-width: 700px;
+}
+
+.card.wide h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.card.wide h2:first-child {
+    margin-top: 0;
+}
+
+.card.wide ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.card.wide li {
+    padding: 8px 0;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.card.wide li:last-child {
+    border-bottom: none;
+}
+
+.card.wide .btn {
+    margin-top: 25px;
+}
+
+/* ============================================
+   ФУТЕР
+   ============================================ */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ============================================
+   📱 АДАПТИВНОСТЬ
+   ============================================ */
+@media (max-width: 600px) {
+    header h1 { font-size: 28px; }
+
+    /* Большие планеты */
+    .planet-earth   { width: 60px; height: 60px; }
+    .planet-mars    { width: 40px; height: 40px; }
+    .planet-saturn  { width: 70px; height: 70px; }
+    .planet-jupiter { width: 50px; height: 50px; }
+
+    /* Маленькие планеты */
+    .planet-earth-sm   { width: 30px; height: 30px; }
+    .planet-mars-sm    { width: 25px; height: 25px; }
+    .planet-jupiter-sm { width: 35px; height: 35px; }
+
+    .planet-saturn-sm {
+        width: 40px;
+        height: 40px;
+        margin-left: -20px; /* половина новой ширины */
+    }
+}
+
+/* ============================================
+   🪐 ПЛАНЕТЫ ВНУТРИ КАРТОЧЕК (под кнопкой)
+   ============================================ */
+
+/* Карточка: колонка, всё по центру */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin-bottom: 15px;
+}
+
+/* Контейнер планеты — теперь под кнопкой */
+.card-planet {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-top: 20px;
+    border-radius: 50%;
+    transition: transform 0.4s ease;
+}
+
+/* При наведении на карточку — планета оживает */
+.card:hover .card-planet {
+    transform: scale(1.08) rotate(6deg);
+}
+
+/* ============================================
+   🌍 ЗЕМЛЯ
+   ============================================ */
+.planet-earth-card {
+    background:
+        /* Континенты */
+        radial-gradient(circle at 30% 30%, #4caf50 0%, #2e7d32 11%, transparent 12%),
+        radial-gradient(circle at 65% 45%, #4caf50 0%, #2e7d32 9%,  transparent 10%),
+        radial-gradient(circle at 45% 70%, #66bb6a 0%, #388e3c 8%,  transparent 9%),
+        radial-gradient(circle at 75% 75%, #4caf50 0%, #2e7d32 6%,  transparent 7%),
+        /* Океан */
+        radial-gradient(circle at 35% 30%,
+            #6ec1ff 0%, #1a73e8 55%, #0b3d91 100%);
+    box-shadow:
+        0 0 35px rgba(110, 193, 255, 0.7),
+        0 0 70px rgba(110, 193, 255, 0.3),
+        inset -14px -14px 30px rgba(0, 0, 0, 0.55),
+        inset 10px 10px 22px rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   🔴 МАРС
+   ============================================ */
+.planet-mars-card {
+    background:
+        /* Кратеры */
+        radial-gradient(circle at 30% 35%, rgba(0,0,0,0.25) 0%, transparent 8%),
+        radial-gradient(circle at 65% 25%, rgba(0,0,0,0.30) 0%, transparent 6%),
+        radial-gradient(circle at 50% 70%, rgba(0,0,0,0.25) 0%, transparent 7%),
+        radial-gradient(circle at 25% 65%, rgba(0,0,0,0.20) 0%, transparent 5%),
+        radial-gradient(circle at 78% 60%, rgba(0,0,0,0.30) 0%, transparent 6%),
+        /* Полярная шапка */
+        radial-gradient(circle at 50% 5%, #fff 0%, rgba(255,255,255,0.6) 8%, transparent 15%),
+        /* Основа */
+        radial-gradient(circle at 35% 30%,
+            #ff8a5b 0%, #c0392b 55%, #7b241c 100%);
+    box-shadow:
+        0 0 35px rgba(255, 138, 91, 0.7),
+        0 0 70px rgba(255, 138, 91, 0.3),
+        inset -14px -14px 30px rgba(0, 0, 0, 0.6),
+        inset 10px 10px 22px rgba(255, 200, 150, 0.15);
+}
+
+/* ============================================
+   🪐 САТУРН
+   ============================================ */
+.planet-saturn-card {
+    background: linear-gradient(180deg,
+        #f7dc9c 0%, #e8c477 20%,
+        #f5d78e 35%, #d4a95a 50%,
+        #e8c477 65%, #c99a4d 80%,
+        #8b6b2e 100%);
+    box-shadow:
+        0 0 35px rgba(247, 220, 156, 0.6),
+        0 0 70px rgba(247, 220, 156, 0.25),
+        inset -14px -14px 30px rgba(0, 0, 0, 0.5),
+        inset 10px 10px 22px rgba(255, 240, 200, 0.2);
+}
+
+/* Кольцо Сатурна */
+.planet-saturn-card .ring-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 185%;
+    height: 42%;
+    border: 4px solid rgba(255, 230, 180, 0.55);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    box-shadow:
+        0 0 18px rgba(255, 230, 180, 0.5),
+        inset 0 0 12px rgba(255, 230, 180, 0.3);
+    pointer-events: none;
+}
+
+.planet-saturn-card .ring-card::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px solid rgba(255, 230, 180, 0.3);
+    border-radius: 50%;
+}
+
+/* ============================================
+   📱 АДАПТИВНОСТЬ
+   ============================================ */
+@media (max-width: 600px) {
+    .card-planet {
+        width: 85px;
+        height: 85px;
+    }
+}

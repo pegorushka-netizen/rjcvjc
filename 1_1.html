@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космос 🚀 — главная</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <meta name="theme-color" content="#0b0c2a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="1_1 — копия.css">
+</head>
+<body>
+
+    <!-- 🪐 Космический фон: много планет по всем углам -->
+    <div class="space-bg" aria-hidden="true">
+        <div class="stars"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+
+        <!-- Верхний левый угол -->
+        <div class="planet planet-earth"></div>
+        <!-- Верхний правый угол -->
+        <div class="planet planet-jupiter"></div>
+        <!-- Центр слева -->
+        <div class="planet planet-mars"></div>
+        <!-- Центр справа -->
+        <div class="planet planet-saturn"><div class="ring"></div></div>
+        <!-- Нижний левый угол -->
+        <div class="planet planet-earth-sm"></div>
+        <!-- Нижний правый угол -->
+        <div class="planet planet-mars-sm"></div>
+        <!-- По центру сверху (маленькая) -->
+        <div class="planet planet-saturn-sm"><div class="ring ring-sm"></div></div>
+        <!-- Внизу по центру -->
+        <div class="planet planet-jupiter-sm"></div>
+    </div>
+
+    <header>
+        <h1>Добро пожаловать в Космос 🚀</h1>
+        <p>Выберите планету, чтобы узнать больше</p>
+    </header>
+
+<main class="planets">
+    <div class="card">
+        <h2>🌍 Земля</h2>
+        <p>Наш дом. Единственная известная планета с жизнью.</p>
+        <a href="earth.html" class="btn">Подробнее →</a>
+        <div class="card-planet planet-earth-card"></div>
+    </div>
+
+    <div class="card">
+        <h2>🔴 Марс</h2>
+        <p>Красная планета. Возможный кандидат для колонизации.</p>
+        <a href="mars.html" class="btn">Подробнее →</a>
+        <div class="card-planet planet-mars-card"></div>
+    </div>
+
+    <div class="card">
+        <h2>🪐 Сатурн</h2>
+        <p>Планета с самыми красивыми кольцами.</p>
+        <a href="saturn.html" class="btn">Подробнее →</a>
+        <div class="card-planet planet-saturn-card">
+            <div class="ring-card"></div>
+        </div>
+    </div>
+</main>
+
+    <footer>
+        <p>© <span id="year"></span> Космический сайт</p>
+        <!-- 🪐 Планеты под карточками -->
+<div class="planets-bottom" aria-hidden="true">
+    <div class="planet-big planet-earth-b"></div>
+    <div class="planet-big planet-mars-b"></div>
+    <div class="planet-big planet-saturn-b"><div class="ring-b"></div></div>
+</div>
+
+<footer>
+    <p>© <span id="year"></span> Космический сайт</p>
+</footer>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
